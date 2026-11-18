@@ -1,0 +1,36 @@
+.race-pane { -fx-background-color: #F4F6F8; }
+.header { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0D47A1; }
+
+.slide-pane { -fx-background-color: linear-gradient(to bottom, #E3F2FD, #BBDEFB); }
+.greeting { -fx-font-size: 34px; -fx-font-weight: bold; -fx-text-fill: #0D47A1; }
+.caption { -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #263238; }
+.counter { -fx-font-size: 14px; -fx-text-fill: #546E7A; }
+.btn-skip { -fx-background-color: white; -fx-text-fill: #0D47A1; -fx-background-radius: 6; -fx-cursor: hand; }
+
+.panel {
+    -fx-background-color: #EAF1FB;
+    -fx-border-color: #C5D5EA;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 14;
+}
+.btn-start, .btn-pause, .btn-reset {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 6;
+    -fx-padding: 10 18 10 18;
+    -fx-cursor: hand;
+}
+.btn-start { -fx-background-color: #1E8E3E; }
+.btn-pause { -fx-background-color: #1565C0; }
+.btn-reset { -fx-background-color: #E53935; }
+.btn-start:disabled, .btn-pause:disabled { -fx-opacity: 0.45; }
+
+.bold-label { -fx-font-weight: bold; }
+.msg-title { -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #0D47A1; }
+.msg-text { -fx-font-size: 13px; -fx-text-fill: #263238; }
+.result-row { -fx-font-size: 13px; -fx-font-weight: bold; }
+
+.strip { -fx-background-color: #1B6E20; }
+.strip-label { -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; }
