@@ -47,11 +47,29 @@ public class CarShape extends Group {
         window1.setFill(Color.LIGHTSKYBLUE);
         window2.setFill(Color.LIGHTSKYBLUE);
 
+        // white plate with the number (Rectangle + Text)
+        Rectangle plate = new Rectangle(38, 20, 26, 11);
+        plate.setFill(Color.WHITE);
+        plate.setArcWidth(4);
+        plate.setArcHeight(4);
+
+        Text numberText = new Text(String.valueOf(car.getNumber()));
+        numberText.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+        numberText.setX(51 - numberText.getLayoutBounds().getWidth() / 2);
+        numberText.setY(29.5);
+
+        // little lights, front and back
+        Rectangle headlight = new Rectangle(95, 22, 5, 4);
+        headlight.setFill(Color.LIGHTYELLOW);
+        Rectangle tailLight = new Rectangle(0, 22, 4, 4);
+        tailLight.setFill(Color.ORANGERED);
+
         // the two wheels (each one is a small Group so it can spin)
         rearWheel = createWheel(22);
         frontWheel = createWheel(78);
 
-        getChildren().addAll(body, roof, window1, window2, rearWheel, frontWheel);
+        getChildren().addAll(body, roof, window1, window2, plate, numberText,
+                headlight, tailLight, rearWheel, frontWheel);
     }
 
     /**
@@ -72,5 +90,22 @@ public class CarShape extends Group {
         wheel.setLayoutX(centerX);
         wheel.setLayoutY(34);
         return wheel;
+    }
+
+    public Group getRearWheel() {
+        return rearWheel;
+    }
+
+    public Group getFrontWheel() {
+        return frontWheel;
+    }
+
+    /**
+     * Puts the car and the wheels back like at the start.
+     */
+    public void resetLook() {
+        setTranslateX(0);
+        rearWheel.setRotate(0);
+        frontWheel.setRotate(0);
     }
 }
