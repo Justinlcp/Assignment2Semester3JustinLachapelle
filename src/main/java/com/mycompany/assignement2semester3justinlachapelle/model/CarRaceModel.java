@@ -55,6 +55,54 @@ public class CarRaceModel {
         }
     }
 
+    /**
+     * How far a car has to go until its front touches the finish line.
+     *
+     * @return the distance in pixels
+     */
+    public double getRaceDistance() {
+        return FINISH_X - START_X - CAR_WIDTH;
+    }
+
+    /**
+     * Updates the x position of a car.
+     *
+     * @param car     the car
+     * @param movedBy how many pixels it moved since the start
+     */
+    public void updateCarPosition(CarData car, double movedBy) {
+        car.setX(START_X + movedBy);
+    }
+
+    /**
+     * Saves that a car crossed the finish line. The first one saved is the winner.
+     *
+     * @param car the car that finished
+     */
+    public void recordFinish(CarData car) {
+        if (!car.isFinished()) {
+            car.setFinished(true);
+            finishOrder.add(car);
+        }
+    }
+
+    public boolean isRaceOver() {
+        return finishOrder.size() == cars.size();
+    }
+
+    /**
+     * Gives the winner.
+     *
+     * @return the first car to finish, or null if none finished yet
+     */
+    public CarData getWinner() {
+        return finishOrder.isEmpty() ? null : finishOrder.get(0);
+    }
+
+    public List<CarData> getFinishOrder() {
+        return Collections.unmodifiableList(finishOrder);
+    }
+
     public List<CarData> getCars() {
         return Collections.unmodifiableList(cars);
     }
