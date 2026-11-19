@@ -49,9 +49,66 @@
                         <Double fx:value="12.0" />
                      </strokeDashArray>
                   </Line>
+                  <StackPane layoutX="0.0" prefHeight="300.0" prefWidth="40.0" styleClass="strip">
+                     <children>
+                        <Label styleClass="strip-label" text="S&#10;T&#10;A&#10;R&#10;T&#10;I&#10;N&#10;G" textAlignment="CENTER" />
+                     </children>
+                  </StackPane>
+                  <StackPane layoutX="860.0" prefHeight="300.0" prefWidth="40.0" styleClass="strip">
+                     <children>
+                        <Label styleClass="strip-label" text="A&#10;R&#10;R&#10;I&#10;V&#10;A&#10;L" textAlignment="CENTER" />
+                     </children>
+                  </StackPane>
+                  <Line endX="854.0" endY="300.0" startX="854.0" stroke="WHITE" strokeWidth="12.0" />
+                  <Line endX="851.0" endY="300.0" startX="851.0" stroke="BLACK" strokeDashOffset="0.0" strokeWidth="6.0">
+                     <strokeDashArray>
+                        <Double fx:value="6.0" />
+                        <Double fx:value="6.0" />
+                     </strokeDashArray>
+                  </Line>
+                  <Line endX="857.0" endY="300.0" startX="857.0" stroke="BLACK" strokeDashOffset="6.0" strokeWidth="6.0">
+                     <strokeDashArray>
+                        <Double fx:value="6.0" />
+                        <Double fx:value="6.0" />
+                     </strokeDashArray>
+                  </Line>
                </children>
             </Pane>
          </center>
+         <bottom>
+            <HBox spacing="14.0">
+               <padding>
+                  <Insets top="12.0" />
+               </padding>
+               <children>
+                  <VBox minWidth="430.0" prefWidth="430.0" spacing="18.0" styleClass="panel">
+                     <children>
+                        <HBox spacing="10.0">
+                           <children>
+                              <Button fx:id="startButton" onAction="#handleStart" styleClass="btn-start" text="&#x25B6;  Start" />
+                              <Button fx:id="pauseButton" onAction="#handlePause" styleClass="btn-pause" text="&#x275A;&#x275A;  Pause" />
+                              <Button onAction="#handleReset" styleClass="btn-reset" text="&#x21BB;  Reset" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label styleClass="bold-label" text="Simulation Speed:" />
+                              <Slider fx:id="speedSlider" max="3.0" min="0.5" prefWidth="190.0" value="1.0" />
+                              <Label fx:id="speedLabel" text="1.0x" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="150.0" spacing="6.0" styleClass="panel" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="messageTitle" styleClass="msg-title" />
+                        <Label fx:id="messageText" styleClass="msg-text" wrapText="true" />
+                        <VBox fx:id="resultsBox" spacing="3.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </bottom>
       </BorderPane>
       <VBox fx:id="slidePane" alignment="CENTER" spacing="12.0" styleClass="slide-pane">
          <children>
