@@ -73,6 +73,19 @@ public class CarRaceController {
     private MediaPlayer mediaPlayer;
     private boolean slideshowDone = false;
 
+    /**
+     * JavaFX calls this by itself after loading the FXML and filling the @FXML fields.
+     */
+    @FXML
+    private void initialize() {
+        drawCars();
+        createAnimations();
+        updateAnimationSpeeds();
+        connectSlider();
+        showReadyMessage();
+        updateButtons();
+    }
+
     // ------------------------------------------------------------ slideshow
 
     /**
@@ -207,6 +220,76 @@ public class CarRaceController {
         for (Animation animation : wheelAnimations) {
             animation.setRate(speedFactor);
         }
+    }
+
+    // -------------------------------------------------------------- buttons
+    // The @FXML methods are called by the buttons (onAction in the FXML file).
+
+    @FXML
+    private void handleStart() {
+        if (state != State.READY && state != State.PAUSED) {
+            return;
+        }
+        state = State.RUNNING;
+        setMessage("Race in progress...", "Cars are racing to the finish line!", Collections.emptyList());
+
+        List<CarData> cars = model.getCars();
+        for (int i = 0; i < cars.size(); i++) {
+            // don't play the cars that already finished
+            if (!cars.get(i).isFinished()) {
+                moveAnimations.get(i).play();
+                wheelAnimations.get(2 * i).play();
+                wheelAnimations.get(2 * i + 1).play();
+            }
+        }
+        updateButtons();
+    }
+
+    @FXML
+    private void handlePause() {
+        if (state != State.RUNNING) {
+            return;
+        }
+        state = State.PAUSED;
+        for (Animation animation : moveAnimations) {
+            animation.pause();
+        }
+        for (Animation animation : wheelAnimations) {
+            animation.pause();
+        }
+        setMessage("Race paused", "Press Start to continue.", Collections.emptyList());
+        updateButtons();
+    }
+
+    @FXML
+    private void handleReset() {
+        for (Animation animation : moveAnimations) {
+            animation.stop();
+        }
+        for (Animation animation : wheelAnimations) {
+            animation.stop();
+        }
+        for (CarShape shape : carShapes) {
+            shape.resetLook();
+        }
+        model.resetRace();          // new random speeds, back to start
+        updateAnimationSpeeds();
+        state = State.READY;
+        showReadyMessage();
+        updateButtons();
+    }
+
+    @FXML
+    private void handleSkip() {
+        finishSlideshow();
+    }
+
+    private void connectSlider() {
+        speedSlider.valueProperty().addListener((obs, oldValue, newValue) -> {
+            speedFactor = Math.round(newValue.doubleValue() * 10) / 10.0;
+            speedLabel.setText(String.format("%.1fx", speedFactor));
+            updateAnimationSpeeds();
+        });
     }
 
     // ---------------------------------------------------------- race logic
