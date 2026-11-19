@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.Double?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+
+<!-- View part of the MVC. Author: Justin Lachapelle -->
+<StackPane prefHeight="590.0" prefWidth="920.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.assignement2semester3justinlachapelle.controller.CarRaceController">
+   <children>
+      <BorderPane fx:id="racePane" styleClass="race-pane" visible="false">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <top>
+            <Label styleClass="header" text="&#x1F3C1;  Car Race Simulation" />
+         </top>
+         <center>
+            <Pane fx:id="trackPane" maxHeight="300.0" maxWidth="900.0" minHeight="300.0" minWidth="900.0" prefHeight="300.0" prefWidth="900.0">
+               <BorderPane.margin>
+                  <Insets top="8.0" />
+               </BorderPane.margin>
+               <children>
+                  <Rectangle fill="#3a3d42" height="300.0" width="900.0" />
+                  <Line endX="860.0" endY="80.0" startX="40.0" startY="80.0" stroke="WHITE" strokeWidth="2.0">
+                     <strokeDashArray>
+                        <Double fx:value="16.0" />
+                        <Double fx:value="12.0" />
+                     </strokeDashArray>
+                  </Line>
+                  <Line endX="860.0" endY="150.0" startX="40.0" startY="150.0" stroke="WHITE" strokeWidth="2.0">
+                     <strokeDashArray>
+                        <Double fx:value="16.0" />
+                        <Double fx:value="12.0" />
+                     </strokeDashArray>
+                  </Line>
+                  <Line endX="860.0" endY="220.0" startX="40.0" startY="220.0" stroke="WHITE" strokeWidth="2.0">
+                     <strokeDashArray>
+                        <Double fx:value="16.0" />
+                        <Double fx:value="12.0" />
+                     </strokeDashArray>
+                  </Line>
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
+      <VBox fx:id="slidePane" alignment="CENTER" spacing="12.0" styleClass="slide-pane">
+         <children>
+            <Label styleClass="greeting" text="Welcome to the Car Race!" />
+            <ImageView fx:id="slideImage" fitWidth="520.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="captionLabel" styleClass="caption" />
+            <Label fx:id="counterLabel" styleClass="counter" />
+            <Button onAction="#handleSkip" styleClass="btn-skip" text="Skip intro  &#x25B6;&#x25B6;" />
+         </children>
+      </VBox>
+   </children>
+</StackPane>
