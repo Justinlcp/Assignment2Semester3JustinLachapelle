@@ -134,6 +134,81 @@ public class CarRaceController {
         }
     }
 
+    // ----------------------------------------------------------- animations
+
+    /**
+     * Puts the 4 cars (made with shapes) on the track.
+     */
+    private void drawCars() {
+        for (CarData car : model.getCars()) {
+            CarShape shape = new CarShape(car);
+            shape.setLayoutX(car.getX());
+            shape.setLayoutY(car.getY());
+            carShapes.add(shape);
+            trackPane.getChildren().add(shape);
+        }
+    }
+
+    /**
+     * Makes the animations of every car (only once).
+     * The durations are set later in updateAnimationSpeeds().
+     */
+    private void createAnimations() {
+        List<CarData> cars = model.getCars();
+        for (int i = 0; i < cars.size(); i++) {
+            CarData car = cars.get(i);
+            CarShape shape = carShapes.get(i);
+
+            // moves the whole car from the start to the finish line
+            TranslateTransition move = new TranslateTransition(Duration.seconds(1), shape);
+            move.setFromX(0);
+            move.setToX(model.getRaceDistance());
+            move.setInterpolator(Interpolator.LINEAR);
+            move.setOnFinished(e -> carFinished(car));
+            moveAnimations.add(move);
+
+            // each time the car moves, update its position in the model
+            shape.translateXProperty().addListener((obs, oldValue, newValue)
+                    -> model.updateCarPosition(car, newValue.doubleValue()));
+
+            // wheels spin until the car finishes
+            wheelAnimations.add(createSpin(shape.getRearWheel()));
+            wheelAnimations.add(createSpin(shape.getFrontWheel()));
+        }
+    }
+
+    private RotateTransition createSpin(Node wheel) {
+        RotateTransition spin = new RotateTransition(Duration.seconds(1), wheel);
+        spin.setByAngle(360);
+        spin.setCycleCount(Animation.INDEFINITE);
+        spin.setInterpolator(Interpolator.LINEAR);
+        return spin;
+    }
+
+    /**
+     * Sets the duration of each animation from the car speed, and applies
+     * the speed of the slider.
+     */
+    private void updateAnimationSpeeds() {
+        List<CarData> cars = model.getCars();
+        for (int i = 0; i < cars.size(); i++) {
+            double speed = cars.get(i).getSpeed();
+            // time = distance / speed
+            moveAnimations.get(i).setDuration(Duration.seconds(model.getRaceDistance() / speed));
+            // one wheel turn = the circumference of the wheel
+            double turnSeconds = 2 * Math.PI * CarShape.WHEEL_RADIUS / speed;
+            wheelAnimations.get(2 * i).setDuration(Duration.seconds(turnSeconds));
+            wheelAnimations.get(2 * i + 1).setDuration(Duration.seconds(turnSeconds));
+        }
+        // the slider changes the rate (1.0 normal, 2.0 twice as fast)
+        for (Animation animation : moveAnimations) {
+            animation.setRate(speedFactor);
+        }
+        for (Animation animation : wheelAnimations) {
+            animation.setRate(speedFactor);
+        }
+    }
+
     // ---------------------------------------------------------- race logic
 
     /**
